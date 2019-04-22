@@ -76,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
 
+//        Context context=getApplicationContext();
+//        UpdateToServer serverClass=new UpdateToServer(context);
+//        serverClass.addtoServer(context);
+
+
         sessionManager = new SessionManager(this);
         if(sessionManager.getUserLogin().equalsIgnoreCase("true")){
             goAhead();
@@ -136,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void saveDataToServer(String name, String email, final String phone, final String device_name) {
         trimCache(this);
-        StringRequest request=new StringRequest(Request.Method.POST, "http://rfbasolutions.com/get_messages_api/save_mobile_no.php", new Response.Listener<String>()
+        StringRequest request=new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/save_mobile_no.php", new Response.Listener<String>()
         {
 
             @Override

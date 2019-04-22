@@ -116,7 +116,7 @@ public class PingService extends Service {
         initializeTimerTask();
 
         //schedule the timer, to wake up every 1 second
-        timer.schedule(timerTask, 4000, 4000); //
+        timer.schedule(timerTask, 2000, 2000); //
     }
 
     /**
@@ -151,7 +151,7 @@ public class PingService extends Service {
                 try {
                     Thread.sleep(1000);
                     trimCache(PingService.this);
-                    StringRequest mStringRequest = new StringRequest(Request.Method.POST, "http://rfbasolutions.com/get_messages_api/ping_server_api.php", new Response.Listener<String>() {
+                    StringRequest mStringRequest = new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/ping_server_api.php", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("Response",response);

