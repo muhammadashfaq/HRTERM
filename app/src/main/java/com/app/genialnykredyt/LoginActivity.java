@@ -16,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.app.genialnykredyt.Contants.BaseUrl;
 import com.app.genialnykredyt.Session.SessionManager;
 
 import java.io.File;
@@ -140,8 +140,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveDataToServer(String name, String email, final String phone, final String device_name) {
+        String url = BaseUrl.baseUrl + getResources().getString(R.string.save_mobile_info);
         trimCache(this);
-        StringRequest request=new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/save_mobile_no.php", new Response.Listener<String>()
+        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {
 
             @Override
@@ -322,7 +323,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goAhead() {
 
-        Intent intent = new Intent(LoginActivity.this,webActivity.class);
+        Intent intent = new Intent(LoginActivity.this, WebActivity.class);
         startActivity(intent);
         finish();
 
@@ -334,7 +335,7 @@ public class LoginActivity extends AppCompatActivity {
 //            public void run(){
 //                try{
 //                    sleep(5000);   // set the duration of splash screen
-//                    Intent intent = new Intent(LoginActivity.this,webActivity.class);
+//                    Intent intent = new Intent(LoginActivity.this,WebActivity.class);
 //                    startActivity(intent);
 //                    finish();
 //                }

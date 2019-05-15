@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "495628375972",
+    "firebase_url": "https://geniyleauth.firebaseio.com",
+    "project_id": "geniyleauth",
+    "storage_bucket": "geniyleauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495628375972:android:1119e7b6943859fc",
+        "android_client_info": {
+          "package_name": "com.app.genialnykredyt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495628375972-o6ldopq8a0jm9prru7uhkm517msp3jj6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.genialnykredyt",
+            "certificate_hash": "75183563072f3966bd2673cccfa0178ba9cb2d20"
+          }
+        },
+        {
+          "client_id": "495628375972-5ml05esa4q7301jphs0b10hh9gfdm23p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqJFBr3n7BFZNNMScikBurX6KBl47ZgHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495628375972-5ml05esa4q7301jphs0b10hh9gfdm23p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import android.net.Uri;
 
 public class SessionManager {
     private static String isUserLogged = "";
+    private static String phoneNumber = "";
     // Shared Preferences
     static SharedPreferences pref;
     static SharedPreferences.Editor editor;
@@ -44,7 +45,13 @@ public class SessionManager {
 
     }
 
+    public static String getPhoneNumber() {
+        return pref.getString("phone","");
+    }
 
-
-
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        editor.putString("phone",phoneNumber);
+        editor.commit();
+    }
 }

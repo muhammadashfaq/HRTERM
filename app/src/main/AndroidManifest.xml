@@ -16,31 +16,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".VerificationActivity"></activity>
+        <activity android:name=".PhoneAuthActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".webActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
 
         </activity>
+        <activity android:name=".WebActivity" >
 
+        </activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name=".Service.PingService"
-            android:enabled="true" >
-        </service>
+            android:enabled="true" />
 
         <receiver
             android:name=".Broadcast.RestarterBroadcast"
             android:enabled="true"
             android:exported="true"
-            android:label="RestartServiceWhenStopped">
-        </receiver>
-
+            android:label="RestartServiceWhenStopped" />
         <receiver
             android:name=".Broadcast.SmsListner"
             android:enabled="true"
@@ -51,6 +51,21 @@
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".Service.BackgroundService"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action  android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

